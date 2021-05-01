@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j(topic = "c.TestState")
 public class TestState {
 
-    public static void main() throws Exception{
+    public static void main(String[] args) throws Exception{
         Thread t1 = new Thread(()->{
             try {
                 Thread.sleep(1000);
@@ -13,6 +13,7 @@ public class TestState {
                 e.printStackTrace();
             }
         });
+        t1.start();
         log.debug(String.valueOf(t1.getState()));
 
         Thread.sleep(500);
