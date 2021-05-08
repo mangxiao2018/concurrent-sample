@@ -12,7 +12,7 @@ public class TwoPhaseTermination {
     private Thread t;
     public static void main(String[] args) throws InterruptedException {
         TwoPhaseTermination tt = new TwoPhaseTermination();
-        tt.start();
+        tt.start();   
         TimeUnit.SECONDS.sleep(5);
         tt.stop();
     }
