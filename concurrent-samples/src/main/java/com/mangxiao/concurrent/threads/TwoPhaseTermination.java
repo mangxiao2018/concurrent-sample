@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * 线程打断练习
  */
 @Slf4j(topic = "c.TwoPhaseTermination")
-public class TwoPhaseTermination {
+public class TwoPhaseTermination {   
     private Thread t;
     public static void main(String[] args) throws InterruptedException {
         TwoPhaseTermination tt = new TwoPhaseTermination();
