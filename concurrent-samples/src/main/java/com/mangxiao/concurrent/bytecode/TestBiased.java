@@ -25,7 +25,7 @@ public class TestBiased {
 
     static Thread t1, t2, t3;
 
-    private static void test4(){
+    private static void test4() throws InterruptedException {
         Vector<Dog> list = new Vector<>();
 
         int loopNumber = 39;
@@ -54,5 +54,22 @@ public class TestBiased {
             LockSupport.park();
         },"t2");
         t2.start();
+
+        t3 = new Thread(()->{
+            LockSupport.park();
+            log.debug("===========================>");
+            for (int i=0; i<loopNumber; i++){
+                Dog d = list.get(i);
+                log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+                synchronized (d){
+                    log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+                }
+                log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+            }
+        },"t3");
+        t3.start();
+
+        t3.join();
+        log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
     }
 }
