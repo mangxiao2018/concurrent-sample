@@ -72,4 +72,41 @@ public class TestBiased {
         t3.join();
         log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
     }
+
+    public void test3(){
+        Vector<Dog> list = new Vector<>();
+        Thread t1 = new Thread(()->{
+            for (int i = 0; i < 30; i++) {
+                Dog d = new Dog();
+                list.add(d);
+                synchronized (d) {
+                    log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+                }
+            }
+            synchronized (list) {
+                list.notify();
+            }
+        },"t1");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            synchronized (list) {
+                try {
+                    list.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            log.debug("===============> ");
+            for (int i = 0; i < 30; i++) {
+                Dog d = list.get(i);
+                log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+                synchronized (d) {
+                    log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+                }
+                log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
+            }
+        }, "t2");
+        t2.start();
+    }
 }
