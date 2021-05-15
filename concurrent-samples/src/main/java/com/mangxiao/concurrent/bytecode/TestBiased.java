@@ -99,7 +99,7 @@ public class TestBiased {
             }
             log.debug("===============> ");
             for (int i = 0; i < 30; i++) {
-                Dog d = list.get(i);
+                Dog d = list.get(i);      
                 log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
                 synchronized (d) {
                     log.debug(i + "\t" + ClassLayout.parseClass(Dog.class).toPrintable(true));
