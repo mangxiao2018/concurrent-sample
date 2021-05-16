@@ -109,4 +109,34 @@ public class TestBiased {
         }, "t2");
         t2.start();
     }
+
+
+    public void test2(){
+        Dog d = new Dog();
+        Thread t1 = new Thread(()->{
+            synchronized (d){
+                log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
+            }
+            synchronized (TestBiased.class){
+                TestBiased.class.notify();
+            }
+        },"t1");
+        t1.start();
+
+        Thread t2 = new Thread(()->{
+            synchronized (TestBiased.class){
+                try {
+                    TestBiased.class.wait();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
+            synchronized (d){
+                log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
+            }
+            log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
+        },"t2");
+        t2.start();
+    }
 }
