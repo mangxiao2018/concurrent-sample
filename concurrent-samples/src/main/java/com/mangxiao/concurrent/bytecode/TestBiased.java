@@ -7,9 +7,18 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
+/**
+ * -XX:-UseCompressedOops -XX:-UseCompressedClassPointers -XX:BiasedLockingStartupDelay=0 -XX:+PrintFlagsFinal
+ * -XX:-UseBiasedLocking tid=0x000000001f173000  -XX:BiasedLockingStartupDelay=0 -XX:+TraceBiasedLocking
+ */
 @Slf4j(topic = "c.TestBiased")
 public class TestBiased {
-
+    /**
+     * [t1] - 29	00000000 00000000 00000000 00000000 00011111 01000101 01101000 00000101
+     * [t2] - 29	00000000 00000000 00000000 00000000 00011111 01000101 11000001 00000101
+     * @param args
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         test5();
     }
@@ -110,7 +119,9 @@ public class TestBiased {
         t2.start();
     }
 
-
+    /**
+     * 测试撤销偏向锁
+     */
     public void test2(){
         Dog d = new Dog();
         Thread t1 = new Thread(()->{
@@ -138,5 +149,19 @@ public class TestBiased {
             log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
         },"t2");
         t2.start();
+    }
+
+    /**
+     * 测试偏向锁
+     */
+    public void test1(){
+        Dog d = new Dog();
+        log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
+        try {
+            Thread.sleep(4000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        log.debug(ClassLayout.parseClass(Dog.class).toPrintable(true));
     }
 }
