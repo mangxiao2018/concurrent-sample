@@ -7,7 +7,7 @@ public class TestCorrectPostureStep1 {
     static final Object room = new Object();
     static boolean hasCigarette = false;
     static boolean hasTakeout = false;
-   
+
     public static void main(String[] args) throws InterruptedException {
         new Thread(()->{
             synchronized (room){
