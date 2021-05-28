@@ -23,6 +23,6 @@ public class TestParkUnpark {
 
         TimeUnit.SECONDS.sleep(2);
         log.debug("unpark...");
-        LockSupport.unpark();
+        LockSupport.unpark(t1);
     }
 }
