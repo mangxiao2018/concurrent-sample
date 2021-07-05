@@ -6,13 +6,15 @@
 package java.util.concurrent;
 ```
 
+### 1、类别
 
+类
 
-### 1、功能介绍
+### 2、功能介绍
 
 构建了一个内部的任务队列类QueueingFuture，内核使用的是阻塞队列BlockingQueue实现的，通过把任务放到队列中，然后按个执行。
 
-### 2、方法
+### 3、方法
 
 ```java
 public ExecutorCompletionService(Executor executor)
